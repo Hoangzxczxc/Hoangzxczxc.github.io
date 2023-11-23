@@ -8,7 +8,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-
+var mongoose = require('mongoose');
+var uri_local = "mongodb://localhost:27017/";
+var uri_cloud = "mongodb+srv://hoangnhgch211192:23042003HOANG@cloud-db.5ahhvfy.mongodb.net/1644";
+mongoose.connect(uri_local)
+.then(() => console.log('connect to DB succeeded!'))
+.catch((err) => console.log('Connect to DB failed.'+err));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
