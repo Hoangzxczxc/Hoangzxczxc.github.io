@@ -1,0 +1,21 @@
+<a href="/mobile/add">Add mobile</a>
+<table border="1">
+    <tr>
+        <th>Brand model</th>
+        <th>Brand color</th>
+        <th>Brand image</th>
+        <th>Brand brand</th>
+    </tr>
+    <tr>
+        {{#each mobiles}}
+    </tr>
+    <tr>
+        <td>{{model}}</td>
+        <td>{{color}}</td>
+        <td>
+            <img src="{{image}}" alt="" width="100" height="120">
+        </td>
+        <td>{{brand.name}}</td>
+    </tr>
+    {{/each}}
+</table>

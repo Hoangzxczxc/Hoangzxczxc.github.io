@@ -6,8 +6,24 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+//1A: declare routers (1 collection -1 router)
+var mobileRouter = require('./routes/mobile'); //mobile.js
+var brandRouter = require('./routes/brand'); //brand.js
+
+
 
 var app = express();
+//2: import abd config "mongoose" module/package/library
+var mongoose = require('mongoose');
+var url = "mongodb+srv://hoangnhgch211192:23042003HOANG@cloud-db.5ahhvfy.mongodb.net/gch1106"
+//url: db_server + db_name . Ex: gch1106 => db_name
+mongoose.connect(url)
+  .then (() => console.log('Successfully connected'))
+  .catch ((err) => console.log(err));
+
+//3: import and config "body-parser" module
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+//1B: declare path (url) for routes 
+app.use('/mobile', mobileRouter);
+app.use('/brand', brandRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,4 +57,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//4: config port (for cloud storage)
+app.listen(process.env.PORT || 3001);
 module.exports = app;
