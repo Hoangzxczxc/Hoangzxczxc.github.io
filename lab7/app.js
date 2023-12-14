@@ -6,20 +6,24 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-//1A. declare routers (1 collection - 1 router)
-var mobileRouter = require('./routes/mobile');  //mobile.js
-var brandRouter = require('./routes/brand');    //brand.js
+// 1A. config location of routers
+var mobileRouter = require('./routes/mobile');
+var brandRouter = require('./routes/brand');
 
 var app = express();
-//2. import and config "mongoose" module/package/library
+
+var hbs = require('hbs');
+hbs.registerHelper('equal', require('handlebars-helper-equal'))
+
+// 2. config 'mongoose' module
 var mongoose = require('mongoose');
-var uri = "mongodb+srv://hoangnhgch211192:23042003HOANG@cloud-db.5ahhvfy.mongodb.net/gch1106"
-//  uri : db_server + db_name . Ex: gch1106 => db_name
+var uri = "mongodb+srv://longndt:rKqPKzCxONqJTlQC@cloud-db.73hpsfj.mongodb.net/gch1106";
+mongoose.set('strictQuery', true); //ignore mongoose warning
 mongoose.connect(uri)
   .then(() => console.log('ok'))
   .catch((err) => console.log(err));
 
-//3. import and config "body-parser" module
+// 3. config 'body-parser' module
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -34,8 +38,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// 1B. config url path of routers
 app.use('/users', usersRouter);
-//1B. declare path (url) for routers
 app.use('/mobile', mobileRouter);
 app.use('/brand', brandRouter);
 
@@ -55,6 +59,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//4. config port (for cloud deployment on Render)
+//4. config port (for cloud deployment)
 app.listen(process.env.PORT || 3001);
+
 module.exports = app;

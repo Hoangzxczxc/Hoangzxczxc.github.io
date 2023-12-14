@@ -35,4 +35,5 @@ router.get('/detail/:id', async (req, res) => {
    res.render('brand/detail', { mobiles })
 })
 
+
 module.exports = router;
